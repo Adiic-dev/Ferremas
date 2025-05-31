@@ -1,11 +1,23 @@
 <div class="home-hero-dark">
+  <!-- Carrusel de videos de fondo -->
+  <div class="video-bg-container">
+    <video
+      #videoPlayer
+      class="video-bg active"
+      [src]="videos[currentVideo]"
+      autoplay
+      muted
+      playsinline
+      (ended)="nextVideo()"
+    >
+      Tu navegador no soporta el video.
+    </video>
+  </div>
   <header class="navbar-dark sticky-navbar">
     <div class="brand">
       <span class="brand-text">Ferremas</span>
     </div>
     <nav>
-      <a routerLink="/" class="btn-nav">Inicio</a>
-      <a routerLink="/contacto" class="btn-nav">Contacto</a>
       <a routerLink="/registro" class="btn-nav">Regístrate</a>
       <a routerLink="/login" class="btn-nav">Acceder</a>
     </nav>
@@ -15,7 +27,7 @@
       <h1>Ferretería Integral</h1>
       <h2>Tu ferretería de confianza</h2>
       <p>
-        Todo lo que necesitas en herramientas, materiales y asesoría para construcción, reparación y mejoras.
+        Todo lo que necesitas en herramientas, materiales, reparación y mejoras.
       </p>
       <a routerLink="/registro" class="btn-cta-dark">
         <span>Comienza ahora</span> <span class="btn-icon">→</span>
@@ -24,16 +36,24 @@
   </div>
 </div>
 <section class="features-dark">
-  <div class="features-list-dark">
-    <div class="feature-dark">
-      <span class="feature-icon-dark">📦</span>
-      <h4>Gestión de Inventario</h4>
-      <p>Controla tu stock y pedidos fácilmente.</p>
+  <div class="features-grid">
+    <div class="feature-card">
+      <span class="feature-icon">📦</span>
+      <h4>Inventario Inteligente</h4>
+      <p>Visualiza, busca y compra productos de calidad.</p>
+      <button class="feature-btn">Ver más</button>
     </div>
-    <div class="feature-dark">
-      <span class="feature-icon-dark">🔧</span>
-      <h4>Asesoría Especializada</h4>
-      <p>Expertos listos para ayudarte en cada paso.</p>
+    <div class="feature-card">
+      <span class="feature-icon">🔧</span>
+      <h4>Asesoría Experta</h4>
+      <p>Chatea con nuestros expertos para resolver tus dudas.</p>
+      <button class="feature-btn">Contactar</button>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">💳</span>
+      <h4>Pagos Flexibles</h4>
+      <p>Elige entre multiples métodos de pago.</p>
+      <button class="feature-btn">Más info</button>
     </div>
   </div>
 </section>
