@@ -82,13 +82,14 @@ WSGI_APPLICATION = 'ev2.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'integracionEvaluacion2',
-        'USER': 'root',
-        'PASSWORD': '',
-        'HOST': 'localhost',
+        'NAME': 'test_mysql',
+        'USER': 'admin',
+        'PASSWORD': 'weHerewere123#',
+        'HOST': 'database-1.cdeo19aogjcb.us-east-1.rds.amazonaws.com',
         'PORT': '3306',
     }
 }
+
 
 
 # Password validation
