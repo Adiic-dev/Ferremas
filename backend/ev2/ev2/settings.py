@@ -142,4 +142,8 @@ REST_FRAMEWORK = {
     )
 }
 
+CORS_ALLOWED_ORIGINS = [
+    "http://44.202.115.238",
+]
+
 CORS_ALLOW_ALL_ORIGINS = True
