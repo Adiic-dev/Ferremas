@@ -22,7 +22,7 @@ export interface Producto {
   providedIn: 'root'
 })
 export class ProductoService {
-  private baseUrl = 'http://localhost:8000/productos/';
+  private baseUrl = 'http://44.202.115.238:8000/productos/';
 
   constructor(private http: HttpClient) {}
 
