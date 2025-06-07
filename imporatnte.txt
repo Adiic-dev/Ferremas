@@ -1,0 +1,19 @@
+en frontend:
+npm install
+
+en backend:
+python -m venv myvenv --> activar ambiente virtual y luego instalar paquetes
+pip install mysqlclient
+pip install django
+pip install djangorestframework
+pip install django-cors-headers
+pip install djangorestframework-simplejwt
+pip install pymysql
+
+
+
+la base de datos es tienes que cambiarla, latengo por defecto con xampp mysql, recuerda usar la bd de aws
+
+una vez instalado todo hacer migraciones
+python manage.py makemigrations
+python manage.py migrate

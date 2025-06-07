@@ -1,0 +1,46 @@
+<nav>
+  <span>Ferremas</span>
+  <div>
+    <button class="btn-nav" (click)="volverHome()">Inicio</button>
+    <button class="btn-nav cerrar-sesion" (click)="cerrarSesion()">Cerrar sesión</button>
+  </div>
+</nav>
+
+<h2>Gestión de Productos</h2>
+
+<div class="form-container">
+  <input class="input-text" [(ngModel)]="nuevoProducto.marca" placeholder="Marca" />
+  <input class="input-text" [(ngModel)]="nuevoProducto.nombre" placeholder="Nombre" />
+  <input class="input-number" type="number" [(ngModel)]="nuevoProducto.precio_inicial" placeholder="Precio Inicial" />
+  <button class="btn-primary" (click)="agregarProducto()">Agregar Producto</button>
+</div>
+
+<table class="productos-table">
+  <thead>
+    <tr>
+      <th>Código</th>
+      <th>Código Producto</th>
+      <th>Marca</th>
+      <th>Nombre</th>
+      <th>Precio Actual</th>
+      <th>Editar Precio</th>
+      <th>Eliminar</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let prod of productos">
+      <td>{{ prod.codigo }}</td>
+      <td>{{ prod.codigo_producto }}</td>
+      <td>{{ prod.marca }}</td>
+      <td>{{ prod.nombre }}</td>
+      <td>{{ prod.precios.length ? prod.precios[0].valor : 'Sin precio' }}</td>
+      <td>
+        <input #inputPrecio type="number" [value]="prod.precios.length ? prod.precios[0].valor : 0" class="input-number-sm" />
+        <button class="btn-secondary" (click)="actualizarPrecio(prod.id, inputPrecio.valueAsNumber)">Actualizar</button>
+      </td>
+      <td>
+        <button class="btn-danger" (click)="eliminarProducto(prod.id)">Eliminar</button>
+      </td>
+    </tr>
+  </tbody>
+</table>

@@ -1,0 +1,110 @@
+<div class="home-hero-dark">
+  <!-- Carrusel de videos de fondo -->
+  <div class="video-bg-container">
+    <video
+      #videoPlayer
+      class="video-bg active"
+      [src]="videos[currentVideo]"
+      autoplay
+      muted
+      playsinline
+      (ended)="nextVideo()"
+    >
+      Tu navegador no soporta el video.
+    </video>
+  </div>
+  <header class="navbar-dark sticky-navbar">
+    <div class="brand">
+      <span class="brand-text">Ferremas</span>
+    </div>
+    <nav>
+      <a routerLink="/registro" class="btn-nav">Regístrate</a>
+      <a routerLink="/login" class="btn-nav">Acceder</a>
+      <button class="btn-nav btn-logout" (click)="cerrarSesion()">Cerrar sesión</button>
+    </nav>
+  </header>
+  <div class="hero-content-dark">
+    <div class="hero-text-dark">
+      <h1>Ferretería Integral</h1>
+      <h2>Tu ferretería de confianza</h2>
+      <p>
+        Todo lo que necesitas en herramientas, materiales, reparación y mejoras.
+      </p>
+      <a routerLink="/registro" class="btn-cta-dark">
+        <span>Comienza ahora</span> <span class="btn-icon">→</span>
+      </a>
+    </div>
+  </div>
+</div>
+<section class="features-dark">
+  <div class="features-grid">
+    <div class="feature-card">
+      <span class="feature-icon">📦</span>
+      <h4>Carrito de compras</h4>
+      <p>Visualiza tu carrito de compras</p>
+      <button class="feature-btn" routerLink="/carrito">Ver más</button>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">🛠️</span>
+      <h4>Panel Administrativo</h4>
+      <p>Gestiona productos, precios y más.</p>
+      <button class="feature-btn" routerLink="/crud">Ir al panel</button>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">💳</span>
+      <h4>Pagos Flexibles</h4>
+      <p>Elige entre multiples métodos de pago.</p>
+      <button class="feature-btn">Más info</button>
+    </div>
+  </div>
+  
+</section>
+
+<div style="
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
+  padding: 24px;
+">
+  <ng-container *ngIf="productos$ | async as productos">
+    <div *ngFor="let producto of productos" style="
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      padding: 16px;
+      background-color: #f9f9f9;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 180px;
+    ">
+      <h3 style="margin: 0; font-size: 18px; color: #2c3e50;">{{ producto.nombre }}</h3>
+      <p style="margin: 4px 0; color: #555;">Marca: <strong>{{ producto.marca }}</strong></p>
+      <p style="margin: 4px 0; color: #2ecc71;">Precio: 
+        <strong *ngIf="producto.precios.length">{{ producto.precios[0].valor | currency:'USD' }}</strong>
+        <span *ngIf="!producto.precios.length">No disponible</span>
+      </p>
+      <button 
+        (click)="agregarAlCarrito(producto)"
+        style="
+          margin-top: auto;
+          background-color: #27ae60;
+          color: white;
+          border: none;
+          padding: 8px 12px;
+          border-radius: 6px;
+          font-size: 14px;
+          cursor: pointer;">
+        Agregar al carrito
+      </button>
+    </div>
+
+    <!-- <h2>Debug</h2>
+    <p *ngIf="productos.length > 0">Productos cargados: {{ productos.length }}</p>
+    <p *ngIf="productos.length === 0">No hay productos</p>
+
+    <pre style="background-color: #f0f0f0; padding: 16px; border-radius: 8px; margin-top: 32px;">
+      {{ productos | json }}
+    </pre> -->
+  </ng-container>
+</div>

@@ -1,0 +1,98 @@
+<!-- NAVBAR -->
+<nav style="
+  background-color: #34495e;
+  padding: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+">
+  <h1 style="color: white; font-size: 24px; margin: 0;">Mi Carrito</h1>
+  <button 
+    (click)="volverAlCatalogo()"
+    style="background-color: #3498db;
+           color: white;
+           border: none;
+           padding: 8px 14px;
+           border-radius: 6px;
+           cursor: pointer;">
+    Volver al catálogo
+  </button>
+</nav>
+
+<!-- LISTADO DE PRODUCTOS EN CARRITO -->
+<div style="padding: 24px;">
+  <ng-container *ngIf="carrito$ | async as items">
+    <div *ngIf="items.length > 0; else vacio">
+      <table style="width: 100%; border-collapse: collapse;">
+        <thead>
+          <tr style="background-color: #ecf0f1;">
+            <th style="padding: 12px; text-align: left;">Producto</th>
+            <th style="padding: 12px; text-align: center;">Cantidad</th>
+            <th style="padding: 12px; text-align: right;">Precio Unitario</th>
+            <th style="padding: 12px; text-align: right;">Subtotal</th>
+            <th style="padding: 12px; text-align: center;">Acción</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of items" style="border-bottom: 1px solid #ddd;">
+            <td style="padding: 12px;">{{ item.producto.nombre }}</td>
+            <td style="padding: 12px; text-align: center;">{{ item.cantidad }}</td>
+            <td style="padding: 12px; text-align: right;">
+              {{ (item.producto.precios?.[0]?.valor || 0) | currency:'USD' }}
+            </td>
+            <td style="padding: 12px; text-align: right;">
+              {{ ((item.producto.precios?.[0]?.valor || 0) * item.cantidad) | currency:'USD' }}
+            </td>
+            <td style="padding: 12px; text-align: center;">
+              <button (click)="eliminarProducto(item.id!)"
+                style="background-color: #e74c3c;
+                       color: white;
+                       border: none;
+                       padding: 6px 12px;
+                       border-radius: 4px;
+                       cursor: pointer;">
+                Eliminar
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- Total y botón vaciar -->
+      <div style="text-align: right; margin-top: 24px; font-size: 18px;">
+        <strong>Total: {{ getTotal(items) | currency:'USD' }}</strong>
+      </div>
+
+      <div style="text-align: right; margin-top: 12px;">
+  <button (click)="vaciarCarrito()"
+    style="background-color: #c0392b;
+           color: white;
+           border: none;
+           padding: 8px 16px;
+           border-radius: 6px;
+           cursor: pointer;">
+    Vaciar carrito
+  </button>
+</div>
+
+<div style="text-align: right; margin-top: 12px;">
+  <button (click)="comprar()"
+    style="background-color: #27ae60;
+           color: white;
+           border: none;
+           padding: 8px 16px;
+           border-radius: 6px;
+           cursor: pointer;">
+    Comprar
+  </button>
+</div>
+
+    </div>
+  </ng-container>
+
+  <ng-template #vacio>
+    <p style="text-align: center; font-size: 18px; color: #888;">
+      No hay productos en el carrito.
+    </p>
+  </ng-template>
+</div>
