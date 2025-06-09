@@ -1,0 +1,10 @@
+{
+  "routes": {
+    "/": {},
+    "/carrito": {},
+    "/crud": {},
+    "/home": {},
+    "/login": {},
+    "/registro": {}
+  }
+}
