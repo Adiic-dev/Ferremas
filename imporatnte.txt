@@ -3,6 +3,8 @@ npm install
 
 en backend:
 python -m venv myvenv --> activar ambiente virtual y luego instalar paquetes
+
+sudo dnf install mariadb-connector-c-devel
 pip install mysqlclient
 pip install django
 pip install djangorestframework
