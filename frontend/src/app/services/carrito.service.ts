@@ -23,7 +23,7 @@ export interface ItemCarrito {
   providedIn: 'root',
 })
 export class CarritoService {
-  private apiUrl = 'http://44.202.115.238:8000';
+  private apiUrl = 'http://44.207.144.184:8000';
 
   private carritoSubject = new BehaviorSubject<ItemCarrito[]>([]);
   carrito$ = this.carritoSubject.asObservable();

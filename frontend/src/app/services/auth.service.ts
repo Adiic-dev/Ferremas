@@ -7,8 +7,8 @@ import { Observable, tap } from 'rxjs';
   providedIn: 'root',
 })
 export class AuthService {
-  private LOGIN_URL = 'http://44.202.115.238:8000/token/';
-  private REFRESH_URL = 'http://44.202.115.238:8000/token_refresh/';
+  private LOGIN_URL = 'http://44.207.144.184:8000/token/';
+  private REFRESH_URL = 'http://44.207.144.184:8000/token_refresh/';
   private tokenKey = 'authToken';
   private refreshTokenKey = 'refreshToken';
 

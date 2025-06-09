@@ -10,7 +10,7 @@ export class RegisterService {
   private baseUrl: string;
 
   constructor(private httpClient: HttpClient) {
-    this.baseUrl = 'http://44.202.115.238:8000/register_user/';
+    this.baseUrl = 'http://44.207.144.184:8000/register_user/';
   }
 
   register(formValue: any) {
