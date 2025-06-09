@@ -1,0 +1,35 @@
+0 verbose cli /home/ec2-user/.nvm/versions/node/v20.19.2/bin/node /home/ec2-user/.nvm/versions/node/v20.19.2/bin/npm
+1 info using npm@10.8.2
+2 info using node@v20.19.2
+3 silly config load:file:/home/ec2-user/.nvm/versions/node/v20.19.2/lib/node_modules/npm/npmrc
+4 silly config load:file:/home/ec2-user/.npmrc
+5 silly config load:file:/home/ec2-user/.nvm/versions/node/v20.19.2/etc/npmrc
+6 verbose title npm start
+7 verbose argv "start"
+8 verbose logfile logs-max:10 dir:/home/ec2-user/.npm/_logs/2025-06-09T20_40_02_222Z-
+9 verbose logfile /home/ec2-user/.npm/_logs/2025-06-09T20_40_02_222Z-debug-0.log
+10 silly logfile start cleaning logs, removing 1 files
+11 verbose stack Error: Could not read package.json: Error: ENOENT: no such file or directory, open '/home/ec2-user/package.json'
+11 verbose stack     at async open (node:internal/fs/promises:639:25)
+11 verbose stack     at async readFile (node:internal/fs/promises:1246:14)
+11 verbose stack     at async read (/home/ec2-user/.nvm/versions/node/v20.19.2/lib/node_modules/npm/node_modules/@npmcli/package-json/lib/read-package.js:9:18)
+11 verbose stack     at async PackageJson.load (/home/ec2-user/.nvm/versions/node/v20.19.2/lib/node_modules/npm/node_modules/@npmcli/package-json/lib/index.js:130:31)
+11 verbose stack     at async PackageJson.normalize (/home/ec2-user/.nvm/versions/node/v20.19.2/lib/node_modules/npm/node_modules/@npmcli/package-json/lib/index.js:116:5)
+11 verbose stack     at async #run (/home/ec2-user/.nvm/versions/node/v20.19.2/lib/node_modules/npm/lib/commands/run-script.js:85:13)
+11 verbose stack     at async RunScript.exec (/home/ec2-user/.nvm/versions/node/v20.19.2/lib/node_modules/npm/lib/commands/run-script.js:39:7)
+11 verbose stack     at async Npm.exec (/home/ec2-user/.nvm/versions/node/v20.19.2/lib/node_modules/npm/lib/npm.js:207:9)
+11 verbose stack     at async module.exports (/home/ec2-user/.nvm/versions/node/v20.19.2/lib/node_modules/npm/lib/cli/entry.js:74:5)
+12 error code ENOENT
+13 error syscall open
+14 error path /home/ec2-user/package.json
+15 error errno -2
+16 error enoent Could not read package.json: Error: ENOENT: no such file or directory, open '/home/ec2-user/package.json'
+17 error enoent This is related to npm not being able to find a file.
+17 error enoent
+18 verbose cwd /home/ec2-user
+19 verbose os Linux 6.1.134-152.225.amzn2023.x86_64
+20 verbose node v20.19.2
+21 verbose npm  v10.8.2
+22 verbose exit -2
+23 verbose code -2
+24 error A complete log of this run can be found in: /home/ec2-user/.npm/_logs/2025-06-09T20_40_02_222Z-debug-0.log

@@ -1,0 +1,6 @@
+# This s Git's per-user configuration file.
+[user]
+#       Please adapt and uncomment the following lines:
+	name = MrMorby
+	email   = diegoacevedo.esteban@gmail.com
+	
