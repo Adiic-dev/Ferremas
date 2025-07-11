@@ -1,0 +1,84 @@
+INSTRUCCIONES DE INSTALACIÓN - PROYECTO FERREMAS
+================================================
+
+FRONTEND (Angular)
+------------------
+1. Navegar a la carpeta frontend:
+   cd frontend
+
+2. Instalar dependencias:
+   npm install
+
+3. Ejecutar en desarrollo:
+   npm start
+
+
+BACKEND (Django)
+----------------
+1. Navegar a la carpeta backend:
+   cd backend/ev2
+
+2. Crear y activar entorno virtual:
+   python -m venv my_venv
+   
+   En Windows:
+   my_venv\Scripts\activate
+   
+   En Linux/Mac:
+   source my_venv/bin/activate
+
+3. Instalar dependencias de Python:
+   pip install django
+   pip install djangorestframework
+   pip install django-cors-headers
+   pip install djangorestframework-simplejwt
+   pip install pymysql
+   pip install mysqlclient
+
+   Nota para Linux: Puede ser necesario instalar:
+   sudo dnf install mariadb-connector-c-devel
+
+4. Configurar base de datos:
+   - Actualmente configurado para XAMPP (localhost)
+   - Para AWS, cambiar configuración en settings.py
+
+5. Ejecutar migraciones:
+   python manage.py makemigrations
+   python manage.py migrate
+
+6. Ejecutar servidor de desarrollo:
+   python manage.py runserver
+
+
+CONFIGURACIÓN DE BASE DE DATOS
+------------------------------
+Archivo: backend/ev2/ev2/settings.py
+
+Para desarrollo local (XAMPP):
+- HOST: 'localhost'
+- USER: 'root'
+- PASSWORD: ''
+- NAME: 'ferremas_db'
+
+Para producción (AWS):
+- HOST: 'database-1.cdeo19aogjcb.us-east-1.rds.amazonaws.com'
+- USER: 'admin'
+- PASSWORD: 'weHerewere123#'
+- NAME: 'test_mysql'
+
+
+URLS DE LA API
+--------------
+La configuración de URLs se maneja automáticamente:
+- Desarrollo: http://localhost:8000
+- Producción: http://44.207.144.184:8000
+
+El sistema detecta automáticamente el entorno y usa la URL correspondiente.
+
+
+NOTAS IMPORTANTES
+-----------------
+- Asegúrate de que XAMPP esté ejecutándose antes de iniciar el backend
+- Crea la base de datos 'ferremas_db' en phpMyAdmin si usas XAMPP
+- El frontend corre en el puerto 4200
+- El backend corre en el puerto 8000

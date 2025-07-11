@@ -1,0 +1,35 @@
+<div class="video-bg-container">
+  <video class="video-bg" src="assets/videos/SegundoFondo.mp4" autoplay muted loop playsinline></video>
+</div>
+
+<div class="login-container">
+  <form class="login-card" [formGroup]="loginForm" (ngSubmit)="login()">
+    <div class="logo">
+      <span class="logo-text">Ferremas</span>
+    </div>
+    <p class="subtitle">Ven a ferremas</p>
+
+    <div class="form-group">
+      <label for="username">Nombre</label>
+      <input id="username" type="text" formControlName="username" placeholder="Ingrese su nombre" />
+      <div *ngIf="loginForm.get('username')?.touched && loginForm.get('username')?.invalid" class="error">
+        El nombre es requerido.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="password">Contraseña</label>
+      <input id="password" type="password" formControlName="password" placeholder="Ingrese su contraseña" />
+      <div *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.invalid" class="error">
+        La contraseña es requerida.
+      </div>
+    </div>
+
+    <button type="submit" class="btn" [disabled]="loginForm.invalid">Acceder</button>
+
+    <div class="footer">
+      ¿No tienes una cuenta?
+      <a routerLink="/registro" class="signin-link">¡Regístrate!</a>
+    </div>
+  </form>
+</div>

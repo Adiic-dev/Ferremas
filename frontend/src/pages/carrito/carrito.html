@@ -1,0 +1,284 @@
+<!-- NAVBAR -->
+<nav style="
+  background-color: #34495e;
+  padding: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+">
+  <h1 style="color: white; font-size: 24px; margin: 0;">Mi Carrito</h1>
+  <button 
+    (click)="volverAlCatalogo()"
+    style="background-color: #3498db;
+           color: white;
+           border: none;
+           padding: 8px 14px;
+           border-radius: 6px;
+           cursor: pointer;">
+    Volver al catálogo
+  </button>
+</nav>
+
+<!-- LISTADO DE PRODUCTOS EN CARRITO -->
+<div style="padding: 24px;">
+  <ng-container *ngIf="carrito$ | async as items">
+    <div *ngIf="items.length > 0; else vacio">
+      <table style="width: 100%; border-collapse: collapse;">
+        <thead>
+          <tr style="background-color: #ecf0f1;">
+            <th style="padding: 12px; text-align: left;">Producto</th>
+            <th style="padding: 12px; text-align: center;">Cantidad</th>
+            <th style="padding: 12px; text-align: right;">Precio Unitario</th>
+            <th style="padding: 12px; text-align: right;">Subtotal</th>
+            <th style="padding: 12px; text-align: center;">Acción</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of items" style="border-bottom: 1px solid #ddd;">
+            <td style="padding: 12px;">{{ item.producto.nombre }}</td>
+            <td style="padding: 12px; text-align: center;">{{ item.cantidad }}</td>
+            <td style="padding: 12px; text-align: right;">
+              {{ (item.producto.precios?.[0]?.valor || 0) | currency:'USD' }}
+            </td>
+            <td style="padding: 12px; text-align: right;">
+              {{ ((item.producto.precios?.[0]?.valor || 0) * item.cantidad) | currency:'USD' }}
+            </td>
+            <td style="padding: 12px; text-align: center;">
+              <button (click)="eliminarProducto(item.id!)"
+                style="background-color: #e74c3c;
+                       color: white;
+                       border: none;
+                       padding: 6px 12px;
+                       border-radius: 4px;
+                       cursor: pointer;">
+                Eliminar
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- Total y botón vaciar -->
+      <div style="text-align: right; margin-top: 24px; font-size: 18px;">
+        <strong>Total: {{ getTotal(items) | currency:'USD' }}</strong>
+      </div>
+
+      <div style="text-align: right; margin-top: 12px;">
+  <button (click)="vaciarCarrito()"
+    style="background-color: #c0392b;
+           color: white;
+           border: none;
+           padding: 8px 16px;
+           border-radius: 6px;
+           cursor: pointer;">
+    Vaciar carrito
+  </button>
+</div>
+
+<div style="text-align: right; margin-top: 12px;">
+  <button (click)="comprar()"
+    style="background-color: #27ae60;
+           color: white;
+           border: none;
+           padding: 8px 16px;
+           border-radius: 6px;
+           cursor: pointer;">
+    Comprar
+  </button>
+</div>
+
+    </div>
+  </ng-container>
+
+  <ng-template #vacio>
+    <p style="text-align: center; font-size: 18px; color: #888;">
+      No hay productos en el carrito.
+    </p>
+  </ng-template>
+</div>
+
+<!-- MODAL DE PAGO -->
+<div *ngIf="showPaymentModal" class="payment-modal-overlay" (click)="closePaymentModal()">
+  <div class="payment-modal" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h2>Método de Pago</h2>
+      <button class="close-btn" (click)="closePaymentModal()">&times;</button>
+    </div>
+    
+    <div class="modal-body">
+      <!-- Tipo de pago -->
+      <div class="form-section">
+        <h3>Método de pago</h3>
+        <div class="payment-single">
+          <div class="payment-method-card">
+            <span class="payment-icon">💳</span>
+            <span>Tarjeta de Débito</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Información de la tarjeta -->
+      <div class="form-section">
+        <h3>Información de la tarjeta</h3>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Número de tarjeta</label>
+            <input 
+              type="text" 
+              [(ngModel)]="paymentData.cardNumber"
+              (input)="formatCardNumber($event)"
+              placeholder="1234 5678 9012 3456"
+              maxlength="19"
+              required>
+          </div>
+        </div>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label>Nombre en la tarjeta</label>
+            <input 
+              type="text" 
+              [(ngModel)]="paymentData.cardName"
+              placeholder="Juan Pérez"
+              required>
+          </div>
+        </div>
+        
+        <div class="form-row">
+          <div class="form-group half">
+            <label>Fecha de vencimiento</label>
+            <input 
+              type="text" 
+              [(ngModel)]="paymentData.expiryDate"
+              (input)="formatExpiryDate($event)"
+              placeholder="MM/YY"
+              maxlength="5"
+              required>
+          </div>
+          <div class="form-group half">
+            <label>CVV</label>
+            <input 
+              type="text" 
+              [(ngModel)]="paymentData.cvv"
+              placeholder="123"
+              maxlength="3"
+              required>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tipo de entrega -->
+      <div class="form-section">
+        <h3>Método de entrega</h3>
+        <div class="delivery-options">
+          <label class="delivery-option">
+            <input type="radio" value="envio" [(ngModel)]="paymentData.deliveryType">
+            <span class="radio-custom"></span>
+            <span class="delivery-icon">🚚</span>
+            <div>
+              <strong>Envío a domicilio</strong>
+              <p>Recíbelo en tu casa (2-3 días hábiles)</p>
+            </div>
+          </label>
+          <label class="delivery-option">
+            <input type="radio" value="retiro" [(ngModel)]="paymentData.deliveryType">
+            <span class="radio-custom"></span>
+            <span class="delivery-icon">🏪</span>
+            <div>
+              <strong>Retiro en tienda</strong>
+              <p>Disponible al siguiente día hábil</p>
+            </div>
+          </label>
+        </div>
+      </div>
+
+      <!-- Información de entrega (solo si es envío) -->
+      <div *ngIf="paymentData.deliveryType === 'envio'" class="form-section">
+        <h3>Información de entrega</h3>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Dirección completa</label>
+            <textarea 
+              [(ngModel)]="paymentData.address"
+              placeholder="Calle, número, comuna, ciudad"
+              rows="3"
+              required></textarea>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Teléfono de contacto</label>
+            <input 
+              type="tel" 
+              [(ngModel)]="paymentData.phone"
+              placeholder="+56 9 1234 5678"
+              required>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn-cancel" (click)="closePaymentModal()">
+        Cancelar
+      </button>
+      <button class="btn-pay" (click)="processPayment()">
+        Procesar Pago
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL DE ÉXITO -->
+<div *ngIf="showSuccessModal" class="success-modal-overlay">
+  <div class="success-modal">
+    <div class="success-icon">
+      <div class="checkmark">
+        <div class="checkmark-circle"></div>
+        <div class="checkmark-stem"></div>
+        <div class="checkmark-kick"></div>
+      </div>
+    </div>
+    
+    <div class="success-content">
+      <h2>¡Pago Procesado con Éxito!</h2>
+      <p class="success-message">
+        Tu pedido ha sido confirmado y será 
+        <span *ngIf="paymentData.deliveryType === 'envio'" class="delivery-method">enviado a tu dirección</span>
+        <span *ngIf="paymentData.deliveryType === 'retiro'" class="delivery-method">preparado para retiro en tienda</span>
+      </p>
+      
+      <div class="order-details">
+        <div class="detail-item">
+          <span class="detail-label">Método de pago:</span>
+          <span class="detail-value">Tarjeta de Débito</span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">Entrega:</span>
+          <span class="detail-value">
+            {{ paymentData.deliveryType === 'envio' ? 'Envío a domicilio' : 'Retiro en tienda' }}
+          </span>
+        </div>
+        <div class="detail-item" *ngIf="paymentData.deliveryType === 'envio'">
+          <span class="detail-label">Tiempo estimado:</span>
+          <span class="detail-value">2-3 días hábiles</span>
+        </div>
+        <div class="detail-item" *ngIf="paymentData.deliveryType === 'retiro'">
+          <span class="detail-label">Disponible:</span>
+          <span class="detail-value">Mañana después de las 10:00 AM</span>
+        </div>
+      </div>
+      
+      <p class="thank-you">¡Gracias por tu compra!</p>
+    </div>
+
+    <div class="success-footer">
+      <button class="btn-continue" (click)="goToHome()">
+        Continuar Comprando
+      </button>
+      <button class="btn-close" (click)="closeSuccessModal()">
+        Cerrar
+      </button>
+    </div>
+  </div>
+</div>
